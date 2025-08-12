@@ -1,0 +1,504 @@
+Last login: Sat Aug  9 17:18:50 on ttys000
+vica492@MacBook-Air-Viktoria ~ % ssh-keygen
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/Users/vica492/.ssh/id_ed25519): 
+/Users/vica492/.ssh/id_ed25519 already exists.
+Overwrite (y/n)? y
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /Users/vica492/.ssh/id_ed25519
+Your public key has been saved in /Users/vica492/.ssh/id_ed25519.pub
+The key fingerprint is:
+SHA256:L4qQAka7LfnJzjzJXM01Z591BKD902B5cB6g5CKY6Wc vica492@MacBook-Air-Viktoria.local
+The key's randomart image is:
++--[ED25519 256]--+
+|           ..o+o.|
+|      +   oo.  =o|
+| .   + . ..o. +.o|
+|. . .   .o.o o =.|
+|.o   .oES + . = o|
+|o +. .oo .   o . |
+|.+=.o   . .      |
+| .**.. . .       |
+|  .Bo .          |
++----[SHA256]-----+
+vica492@MacBook-Air-Viktoria ~ % cat ~/.ssh/id_ed25519.pub
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1/y+Y4toeIsUjATITP6/CNWqXhFwD0f83EnsnRsjiy vica492@MacBook-Air-Viktoria.local
+vica492@MacBook-Air-Viktoria ~ % ssh cd46b312-6e3a-4fb7-8811-827a5e23d27d@serverhub.praktikum-services.ru -p 4554
+cd46b312-6e3a-4fb7-8811-827a5e23d27d@serverhub.praktikum-services.ru: Permission denied (publickey).
+vica492@MacBook-Air-Viktoria ~ % ssh aefa972d-7c54-400a-87be-da910f8b07ad@serverhub.praktikum-services.ru -p 4554
+morty@d0621128213e:~$  psql -U morty -d scooter_rent  smith
+psql: warning: extra command-line argument "smith" ignored
+Password for user morty: 
+psql: FATAL:  password authentication failed for user "morty"
+morty@d0621128213e:~$ psql -U morty -d scooter_rent
+Password for user morty: 
+psql: FATAL:  password authentication failed for user "morty"
+morty@d0621128213e:~$ psql -U morty -d scooter_rent  smith
+psql: warning: extra command-line argument "smith" ignored
+Password for user morty: 
+psql: fe_sendauth: no password supplied
+morty@d0621128213e:~$ psql -U morty -d scooter_rent
+Password for user morty: 
+psql: FATAL:  password authentication failed for user "morty"
+morty@d0621128213e:~$ psql -U morty -d scooter_rent
+Password for user morty: 
+psql: FATAL:  password authentication failed for user "morty"
+morty@d0621128213e:~$ psql -U morty -d scooter_rent smith
+psql: warning: extra command-line argument "smith" ignored
+Password for user morty: 
+psql (11.18 (Debian 11.18-0+deb10u1))
+Type "help" for help.
+
+scooter_rent=# \?
+scooter_rent=# q
+scooter_rent-# \?
+scooter_rent-# \?
+scooter_rent-# q
+scooter_rent-# \c name
+FATAL:  database "name" does not exist
+Previous connection kept
+scooter_rent-# \?
+scooter_rent-# pwd
+scooter_rent-# \?
+scooter_rent-# \?
+scooter_rent-# \c name
+FATAL:  database "name" does not exist
+Previous connection kept
+scooter_rent-# \c scooter_rent
+You are now connected to database "scooter_rent" as user "morty".
+scooter_rent-# psql -U morty -d scooter_rent smith
+scooter_rent-# \?
+scooter_rent-# 
+scooter_rent-# exit
+Use \q to quit.
+scooter_rent-# \q
+morty@d0621128213e:~$ psql -U morty -d scooter_rent
+Password for user morty: 
+psql (11.18 (Debian 11.18-0+deb10u1))
+Type "help" for help.
+
+scooter_rent=# smith
+scooter_rent-# \q
+morty@d0621128213e:~$ psql -U morty -d scooter_rent
+Password for user morty: 
+psql: FATAL:  password authentication failed for user "morty"
+morty@d0621128213e:~$ psql -U morty -d scooter_rent smith
+psql: warning: extra command-line argument "smith" ignored
+Password for user morty: 
+psql (11.18 (Debian 11.18-0+deb10u1))
+Type "help" for help.
+
+scooter_rent=# \dt
+           List of relations
+ Schema |     Name      | Type  | Owner 
+--------+---------------+-------+-------
+ public | Couriers      | table | root
+ public | Orders        | table | root
+ public | SequelizeMeta | table | root
+(3 rows)
+
+scooter_rent=# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login
+scooter_rent-# \c scooter_rent
+You are now connected to database "scooter_rent" as user "morty".
+scooter_rent-# \dt
+           List of relations
+ Schema |     Name      | Type  | Owner 
+--------+---------------+-------+-------
+ public | Couriers      | table | root
+ public | Orders        | table | root
+ public | SequelizeMeta | table | root
+(3 rows)
+
+scooter_rent-# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ERROR:  syntax error at or near "SELECT"
+LINE 2: SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "C...
+        ^
+scooter_rent=# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ login | count 
+-------+-------
+(0 rows)
+
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END AS stat FROM "Orders";
+ track | stat 
+-------+------
+(0 rows)
+
+scooter_rent=# 
+scooter_rent=# Ѕез AS столбец будет называтьс€ case
+scooter_rent-# 
+scooter_rent-# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END FROM "Orders";
+ERROR:  syntax error at or near "Ѕез"
+LINE 1: Ѕез AS столбец будет называтьс€ case
+        ^
+scooter_rent=# 
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN '2' WHEN cancelled = true THEN '-1' WHEN "inDelivery" = true THEN '1' ELSE '0' END FROM "Orders";
+ track | case 
+-------+------
+(0 rows)
+
+scooter_rent=# q
+scooter_rent-# \q
+morty@d0621128213e:~$ pwd
+/home/morty
+morty@d0621128213e:~$ ls
+cooter_rent
+morty@d0621128213e:~$ ls -l
+total 8
+-rw-r--r-- 1 morty morty 6089 Aug  9 14:36 cooter_rent
+morty@d0621128213e:~$ \c cooter_rent
+bash: c: command not found
+morty@d0621128213e:~$ ls -l /var/www/backend/logs
+total 0
+-rw-r--r-- 1 root root 0 Aug  9 14:25 error.log
+-rw-r--r-- 1 root root 0 Aug  9 14:25 info.log
+morty@d0621128213e:~$ ls -l error.log
+ls: cannot access 'error.log': No such file or directory
+morty@d0621128213e:~$ ls -l
+total 8
+-rw-r--r-- 1 morty morty 6089 Aug  9 14:36 cooter_rent
+morty@d0621128213e:~$ ls -a
+.  ..  .bashrc  cooter_rent  .lesshst  .psql_history  .ssh
+morty@d0621128213e:~$ cd ~
+morty@d0621128213e:~$ ls -a
+.  ..  .bashrc  cooter_rent  .lesshst  .psql_history  .ssh
+morty@d0621128213e:~$ ls -t
+cooter_rent
+morty@d0621128213e:~$ ls -alt
+total 44
+-rw------- 1 morty morty 1199 Aug  9 14:52 .psql_history
+drwxr-xr-x 1 morty morty 4096 Aug  9 14:46 .
+-rw------- 1 morty morty   28 Aug  9 14:37 .lesshst
+-rw-r--r-- 1 morty morty 6089 Aug  9 14:36 cooter_rent
+drwxr-xr-x 1 root  root  4096 Jan 16  2023 ..
+drwxr-xr-x 1 morty morty 4096 Jan 16  2023 .ssh
+-rw-rw-r-- 1 root  root  3850 Dec 15  2022 .bashrc
+morty@d0621128213e:~$ \c cooter_rent
+bash: c: command not found
+morty@d0621128213e:~$ \c
+bash: c: command not found
+morty@d0621128213e:~$ \c scooter_rent
+bash: c: command not found
+morty@d0621128213e:~$ ls cooter_rent
+cooter_rent
+morty@d0621128213e:~$ nano cooter_rent
+morty@d0621128213e:~$ \dt
+bash: dt: command not found
+morty@d0621128213e:~$ SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+bash: syntax error near unexpected token `('
+morty@d0621128213e:~$ SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+bash: syntax error near unexpected token `('
+morty@d0621128213e:~$ SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+bash: syntax error near unexpected token `('
+morty@d0621128213e:~$ ls -alt
+total 48
+drwxr-xr-x 1 morty morty 4096 Aug  9 15:15 .
+-rw-r--r-- 1 morty morty 6090 Aug  9 15:15 cooter_rent
+drwxr-xr-x 3 morty morty 4096 Aug  9 15:12 .local
+-rw------- 1 morty morty 1199 Aug  9 14:52 .psql_history
+-rw------- 1 morty morty   28 Aug  9 14:37 .lesshst
+drwxr-xr-x 1 root  root  4096 Jan 16  2023 ..
+drwxr-xr-x 1 morty morty 4096 Jan 16  2023 .ssh
+-rw-rw-r-- 1 root  root  3850 Dec 15  2022 .bashrc
+morty@d0621128213e:~$ \?
+bash: ?: command not found
+morty@d0621128213e:~$ cd error.log
+bash: cd: error.log: No such file or directory
+morty@d0621128213e:~$ Read from remote host serverhub.praktikum-services.ru: Connection reset by peer
+Connection to serverhub.praktikum-services.ru closed.
+client_loop: send disconnect: Broken pipe
+vica492@MacBook-Air-Viktoria ~ % ssh aefa972d-7c54-400a-87be-da910f8b07ad@serverhub.praktikum-services.ru -p 4554 
+morty@d0621128213e:~$ psql -U morty -d scooter_rent smith
+psql: warning: extra command-line argument "smith" ignored
+Password for user morty: 
+psql: fe_sendauth: no password supplied
+morty@d0621128213e:~$ psql -U morty -d scooter_rent smith
+psql: warning: extra command-line argument "smith" ignored
+Password for user morty: 
+psql: FATAL:  password authentication failed for user "morty"
+morty@d0621128213e:~$ psql -U morty -d scooter_rent
+Password for user morty: 
+psql (11.18 (Debian 11.18-0+deb10u1))
+Type "help" for help.
+
+scooter_rent=# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ login | count 
+-------+-------
+(0 rows)
+
+scooter_rent=# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ login | count 
+-------+-------
+(0 rows)
+
+scooter_rent=# \q
+morty@d0621128213e:~$ psql -U morty -d scooter_rent smith
+psql: warning: extra command-line argument "smith" ignored
+Password for user morty: 
+psql: fe_sendauth: no password supplied
+morty@d0621128213e:~$ psql -U morty -d scooter_rent
+Password for user morty: 
+psql: fe_sendauth: no password supplied
+morty@d0621128213e:~$ psql -U morty -d scooter_rent
+Password for user morty: 
+psql: fe_sendauth: no password supplied
+morty@d0621128213e:~$ psql -U morty -d scooter_rent
+Password for user morty: 
+psql (11.18 (Debian 11.18-0+deb10u1))
+Type "help" for help.
+
+scooter_rent=# \?
+scooter_rent=# \c name
+FATAL:  database "name" does not exist
+Previous connection kept
+scooter_rent=# \c scooter_rent
+You are now connected to database "scooter_rent" as user "morty".
+scooter_rent=# ls -alt
+scooter_rent-# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ERROR:  syntax error at or near "ls"
+LINE 1: ls -alt
+        ^
+scooter_rent=# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ login | count 
+-------+-------
+(0 rows)
+
+scooter_rent=# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ login | count 
+-------+-------
+(0 rows)
+
+scooter_rent=# \c scooter_rent
+You are now connected to database "scooter_rent" as user "morty".
+scooter_rent=# \dt
+           List of relations
+ Schema |     Name      | Type  | Owner 
+--------+---------------+-------+-------
+ public | Couriers      | table | root
+ public | Orders        | table | root
+ public | SequelizeMeta | table | root
+(3 rows)
+
+scooter_rent=# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ login | count 
+-------+-------
+(0 rows)
+
+scooter_rent=# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ login | count 
+-------+-------
+(0 rows)
+
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END AS stat FROM "Orders";
+ track  | stat 
+--------+------
+ 988082 |    0
+ 221447 |    0
+ 364020 |    0
+(3 rows)
+
+scooter_rent=# 
+scooter_rent=# Ѕез AS столбец будет называтьс€ case
+scooter_rent-# 
+scooter_rent-# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END FROM "Orders";
+ERROR:  syntax error at or near "Ѕез"
+LINE 1: Ѕез AS столбец будет называтьс€ case
+        ^
+scooter_rent=# 
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN '2' WHEN cancelled = true THEN '-1' WHEN "inDelivery" = true THEN '1' ELSE '0' END FROM "Orders";
+ track  | case 
+--------+------
+ 988082 | 0
+ 221447 | 0
+ 364020 | 0
+(3 rows)
+
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END AS stat FROM "Orders";
+ track  | stat 
+--------+------
+ 988082 |    0
+ 221447 |    0
+ 364020 |    0
+(3 rows)
+
+scooter_rent=# 
+scooter_rent=# Ѕез AS столбец будет называтьс€ case
+scooter_rent-# 
+scooter_rent-# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END FROM "Orders";
+ERROR:  syntax error at or near "Ѕез"
+LINE 1: Ѕез AS столбец будет называтьс€ case
+        ^
+scooter_rent=# 
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN '2' WHEN cancelled = true THEN '-1' WHEN "inDelivery" = true THEN '1' ELSE '0' END FROM "Orders";
+ track  | case 
+--------+------
+ 988082 | 0
+ 221447 | 0
+ 364020 | 0
+(3 rows)
+
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END AS stat FROM "Orders";
+ track  | stat 
+--------+------
+ 988082 |    0
+ 221447 |    0
+ 364020 |    0
+ 483894 |    0
+(4 rows)
+
+scooter_rent=# 
+scooter_rent=# Ѕез AS столбец будет называтьс€ case
+scooter_rent-# 
+scooter_rent-# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END FROM "Orders";
+ERROR:  syntax error at or near "Ѕез"
+LINE 1: Ѕез AS столбец будет называтьс€ case
+        ^
+scooter_rent=# 
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN '2' WHEN cancelled = true THEN '-1' WHEN "inDelivery" = true THEN '1' ELSE '0' END FROM "Orders";
+ track  | case 
+--------+------
+ 988082 | 0
+ 221447 | 0
+ 364020 | 0
+ 483894 | 0
+(4 rows)
+
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END AS stat FROM "Orders";
+ track  | stat 
+--------+------
+ 988082 |    0
+ 221447 |    0
+ 364020 |    0
+ 483894 |    1
+ 483894 |    1
+(5 rows)
+
+scooter_rent=# 
+scooter_rent=# Ѕез AS столбец будет называтьс€ case
+scooter_rent-# 
+scooter_rent-# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END FROM "Orders";
+ERROR:  syntax error at or near "Ѕез"
+LINE 1: Ѕез AS столбец будет называтьс€ case
+        ^
+scooter_rent=# 
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN '2' WHEN cancelled = true THEN '-1' WHEN "inDelivery" = true THEN '1' ELSE '0' END FROM "Orders";
+ track  | case 
+--------+------
+ 988082 | 0
+ 221447 | 0
+ 364020 | 0
+ 483894 | 1
+ 483894 | 1
+(5 rows)
+
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END AS stat FROM "Orders";
+ track  | stat 
+--------+------
+ 988082 |    0
+ 221447 |    0
+ 483894 |    1
+ 483894 |    1
+ 364020 |   -1
+(5 rows)
+
+scooter_rent=# 
+scooter_rent=# Ѕез AS столбец будет называтьс€ case
+scooter_rent-# 
+scooter_rent-# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END FROM "Orders";
+ERROR:  syntax error at or near "Ѕез"
+LINE 1: Ѕез AS столбец будет называтьс€ case
+        ^
+scooter_rent=# 
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN '2' WHEN cancelled = true THEN '-1' WHEN "inDelivery" = true THEN '1' ELSE '0' END FROM "Orders";
+ track  | case 
+--------+------
+ 988082 | 0
+ 221447 | 0
+ 483894 | 1
+ 483894 | 1
+ 364020 | -1
+(5 rows)
+
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END AS stat FROM "Orders";
+ track  | stat 
+--------+------
+ 988082 |    0
+ 483894 |    1
+ 483894 |    1
+ 364020 |   -1
+  73594 |    0
+ 221447 |    1
+ 221447 |    2
+(7 rows)
+
+scooter_rent=# 
+scooter_rent=# Ѕез AS столбец будет называтьс€ case
+scooter_rent-# 
+scooter_rent-# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END FROM "Orders";
+ERROR:  syntax error at or near "Ѕез"
+LINE 1: Ѕез AS столбец будет называтьс€ case
+        ^
+scooter_rent=# 
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN '2' WHEN cancelled = true THEN '-1' WHEN "inDelivery" = true THEN '1' ELSE '0' END FROM "Orders";
+ track  | case 
+--------+------
+ 988082 | 0
+ 483894 | 1
+ 483894 | 1
+ 364020 | -1
+  73594 | 0
+ 221447 | 1
+ 221447 | 2
+(7 rows)
+
+scooter_rent=# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ login  | count 
+--------+-------
+ qwerty |     4
+(1 row)
+
+scooter_rent=# SELECT "Couriers".login, COUNT("Orders"."courierId") FROM "Couriers" INNER JOIN "Orders" ON "Couriers".id = "Orders"."courierId" WHERE "Orders"."inDelivery" = True GROUP BY "Couriers".login;
+ login  | count 
+--------+-------
+ qwerty |     4
+ vica   |     2
+ vuca   |     2
+(3 rows)
+
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END AS stat FROM "Orders";
+ track  | stat 
+--------+------
+ 483894 |    1
+ 483894 |    1
+ 364020 |   -1
+ 221447 |    1
+ 221447 |    2
+  73594 |    1
+  73594 |    1
+ 988082 |    1
+ 988082 |    1
+(9 rows)
+
+scooter_rent=# 
+scooter_rent=# Ѕез AS столбец будет называтьс€ case
+scooter_rent-# 
+scooter_rent-# SELECT track, CASE WHEN finished = true THEN 2 WHEN cancelled = true THEN -1 WHEN "inDelivery" = true THEN 1 ELSE 0 END FROM "Orders";
+ERROR:  syntax error at or near "Ѕез"
+LINE 1: Ѕез AS столбец будет называтьс€ case
+        ^
+scooter_rent=# 
+scooter_rent=# SELECT track, CASE WHEN finished = true THEN '2' WHEN cancelled = true THEN '-1' WHEN "inDelivery" = true THEN '1' ELSE '0' END FROM "Orders";
+ track  | case 
+--------+------
+ 483894 | 1
+ 483894 | 1
+ 364020 | -1
+ 221447 | 1
+ 221447 | 2
+  73594 | 1
+  73594 | 1
+ 988082 | 1
+ 988082 | 1
+(9 rows)
+
+scooter_rent=# 
